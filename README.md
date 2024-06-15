@@ -18,8 +18,8 @@ This project is a comprehensive pipeline for image classification tasks using Co
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/image-classification-project.git
-   cd image-classification-project
+   git clone https://github.com/EkmalRey/ImgClassification.git
+   cd ImgClassification
    ```
 
 2. Install the required packages:
@@ -35,7 +35,7 @@ This project is a comprehensive pipeline for image classification tasks using Co
 The `DataPreparation` class handles loading, processing, and splitting the dataset.
 
 ```python
-from data_preparation import DataPreparation
+from CLASSification import DataPreparation
 
 dataset_folder = 'path/to/dataset'
 data_prep = DataPreparation(dataset_folder)
@@ -61,7 +61,7 @@ data_prep.show_sample(train_gen)
 The `CNNModel` class provides functionalities to create and modify a CNN model.
 
 ```python
-from model_creation import CNNModel
+from CLASSification import CNNModel
 
 model_folder = 'path/to/model_folder'
 cnn_model = CNNModel(model_folder, classes=data_prep.classes)
@@ -116,6 +116,6 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 with an additional clause restricting commercial use. For commercial use, please contact the author. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the Non-Commercial MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
