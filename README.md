@@ -45,7 +45,7 @@ dataset_folder = 'path/to/dataset'
 data_prep = DataPreparation(dataset_folder)
 
 # Load dataset
-data = data_prep.load_dataset(resize=True, check_error=True, copy_to_local=True)
+data = data_prep.load_dataset(check_error=True, copy_to_local=True)
 
 # Describe dataset
 data_prep.describe_dataset(data)
@@ -54,7 +54,7 @@ data_prep.describe_dataset(data)
 train_df, val_df, test_df = data_prep.split_dataset(data, train_size=0.8, upsample=True)
 
 # Create image generators
-train_gen, val_gen, test_gen = data_prep.image_generator(train_df, val_df, test_df, aug_train=True)
+train_gen, val_gen, test_gen = data_prep.image_generator(train_df, val_df, test_df, aug_train=True, class_mode='categorical')
 
 # Show sample images
 data_prep.show_sample(train_gen)
@@ -68,19 +68,20 @@ The `CNNModel` class provides functionalities to create and modify a CNN model.
 from CNNPipeline import CNNModel
 
 model_folder = 'path/to/model_folder'
-cnn_model = CNNModel(model_folder, classes=data_prep.classes)
+cnn_model = CNNModel(model_folder, img_size=(224, 224, 3), classes=data_prep.classes, data_setup={})
 
 # Create base model
-base_model = cnn_model.create_basemodel_keras(base='EffNet', lr=0.001, trainable=False)
+base_model = cnn_model.create_basemodel_keras(base='EffNet', lr=0.001, trainable=False, pooling=None)
 
 # Add layers to the base model
-model_with_layers = cnn_model.add_fully_connected_layers(base_model, layer_units=[512, 256])
-model_with_layers = cnn_model.add_batch_normalization(model_with_layers)
+model_with_layers = cnn_model.add_fully_connected_layers(base_model, layer_units=[512, 256], activation='relu')
+model_with_layers = cnn_model.add_convolutional_layers(base_model, num_layers=1, filters=32, kernel_size=(5,5), pool_size=(2,2), activation='relu')
+model_with_layers = cnn_model.add_batch_normalization(model_with_layers, axis=-1, momentum=0.99, epsilon=0.001)
 model_with_layers = cnn_model.add_dropout(model_with_layers, rate=0.4)
 model_with_layers = cnn_model.add_flatten(model_with_layers)
 
 # Compile the model
-final_model = cnn_model.model_compile(model_with_layers)
+final_model = cnn_model.model_compile(model_with_layers, force=False)
 ```
 
 ### Training
@@ -89,7 +90,7 @@ Train the model using the created generators.
 
 ```python
 # Train the model
-history = cnn_model.train(final_model, train_gen, val_gen, epochs=10)
+history = cnn_model.train(final_model, train_gen, val_gen, epochs=10, callbacks=None)
 
 # Visualize training history
 cnn_model.visualize_train(history)
