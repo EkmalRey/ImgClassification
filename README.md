@@ -4,14 +4,16 @@ This project is a comprehensive pipeline for image classification tasks using Co
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Data Preparation](#data-preparation)
-  - [Model Creation](#model-creation)
-  - [Training](#training)
-  - [Evaluation and Visualization](#evaluation-and-visualization)
-- [Contributing](#contributing)
-- [License](#license)
+- [Image Classification Project](#image-classification-project)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Data Preparation](#data-preparation)
+    - [Model Creation](#model-creation)
+    - [Training](#training)
+    - [Evaluation and Visualization](#evaluation-and-visualization)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 ## Installation
 
@@ -37,7 +39,7 @@ This project is a comprehensive pipeline for image classification tasks using Co
 The `DataPreparation` class handles loading, processing, and splitting the dataset.
 
 ```python
-from CLASSification import DataPreparation
+from CNNPipeline import DataPreparation
 
 dataset_folder = 'path/to/dataset'
 data_prep = DataPreparation(dataset_folder)
@@ -63,7 +65,7 @@ data_prep.show_sample(train_gen)
 The `CNNModel` class provides functionalities to create and modify a CNN model.
 
 ```python
-from CLASSification import CNNModel
+from CNNPipeline import CNNModel
 
 model_folder = 'path/to/model_folder'
 cnn_model = CNNModel(model_folder, classes=data_prep.classes)
